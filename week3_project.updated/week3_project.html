@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Week 3 Project Unit Tests</title>
+		<link rel="stylesheet" href="http://code.jquery.com/qunit/qunit-1.22.0.css">
+	</head>
+	<body>
+		<div id="qunit"></div>
+		<div id="qunit-fixture"></div>
+		<script src="http://code.jquery.com/qunit/qunit-1.22.0.js"></script>
+
+		<!-- 
+		     __        __      __   __   __   ___     __   __   ___  __           ___  __   ___ 
+		\ / /  \ |  | |__)    /  ` /  \ |  \ |__     / _` /  \ |__  /__`    |__| |__  |__) |__  
+		 |  \__/ \__/ |  \    \__, \__/ |__/ |___    \__> \__/ |___ .__/    |  | |___ |  \ |___ 
+		                                                                                        
+		-->
+		<script type="text/javascript">
+
+			/*
+			A. donuts
+			
+			Given an int count of a number of donuts, return a string
+			of the form 'Number of donuts: <count>', where <count> is the number
+			passed in. However, if the count is 10 or more, then use the word 'many'
+			instead of the actual count.
+			So donuts(5) returns 'Number of donuts: 5'
+			and donuts(23) returns 'Number of donuts: many'
+			*/
+			function donuts(count){
+				if(count > 9){
+					count = 'many'
+				}
+				thing = 'Number of donuts: ' + count;
+				return thing;
+			}
+
+			//Edit by Jose Guadarrama
+			//3.23.2017
+			
+			/*
+			B. both_ends
+			
+			Given a string s, return a string made of the first 2
+			and the last 2 chars of the original string,
+			so 'spring' yields 'spng'. However, if the string length
+			is less than 2, return instead the empty string.
+			*/
+			function both_ends(s){
+			  if (s.length < 2)
+			  {
+				s = "";
+			  }
+				thing_2 = s.slice(0,2) + s.slice(-2); 
+
+			  return thing_2;
+			}
+
+
+			/*
+			C. fix_start
+			
+			Given a string s, return a string
+			where all occurrences of its first char have
+			been changed to '*', except do not change
+			the first char itself.
+			e.g. 'babble' yields 'ba**le'
+			Assume that the string is length 1 or more.
+			Hint: s.replace(stra, strb) returns a version of string s
+			where all instances of stra have been replaced by strb.
+			*/
+			function fix_start(s){
+				length = s.length;
+				stra = s[0];
+				strb = '*';
+				strc = s.slice(1);
+				strd = strc.replace(stra, strb);
+				s = stra + strd.replace(stra, strb);
+				return s;
+			}
+
+			/*
+			D. MixUp
+			
+			Given strings a and b, return a single string with a and b separated
+			by a space '<a> <b>', except swap the first 2 chars of each string.
+			e.g.
+			'mix', pod' -> 'pox mid'
+			'dog', 'dinner' -> 'dig donner'
+			Assume a and b are length 2 or more.
+			*/
+			function mix_up(a, b){
+				stra = a.slice(0,2);
+				strb = b.slice(0,2);
+				s = a.replace(stra, strb) + " " + b.replace(strb, stra)
+				return s;
+			}
+
+
+			/*
+			E. verbing
+			
+			Given a string, if its length is at least 3,
+			add 'ing' to its end.
+			Unless it already ends in 'ing', in which case
+			add 'ly' instead.
+			If the string length is less than 3, leave it unchanged.
+			Return the resulting string.
+			*/
+			function verbing(s){
+				// +++your code here+++
+				
+				if(s.length >= 3)
+				{
+					if(s.slice(-3) != 'ing')
+					{
+					 s += 'ing'
+					}
+					else
+					{
+					  s += 'ly'
+					}
+				}
+				  return s;
+			}
+
+
+			/*
+			F. not_bad
+			
+			Given a string, find the first appearance of the
+			substring 'not' and 'bad'. If the 'bad' follows
+			the 'not', replace the whole 'not'...'bad' substring
+			with 'good'.
+			Return the resulting string.
+			So 'This dinner is not that bad!' yields:
+			This dinner is good!
+			*/
+			function not_bad(s){
+			  var notSub = s.indexOf('not');
+			  var badSub = s.indexOf('bad');
+			  if (notSub == -1 || badSub == -1 || badSub < notSub) return s;
+			    return s.slice(0, notSub) + 'good' + s.slice(badSub + 3);
+			}
+
+
+			/*
+			G. front_back
+			
+			Consider dividing a string into two halves.
+			If the length is even, the front and back halves are the same length.
+			If the length is odd, we'll say that the extra char goes in the front half.
+			e.g. 'abcde', the front half is 'abc', the back half 'de'.
+			Given 2 strings, a and b, return a string of the form
+			a-front + b-front + a-back + b-back
+			*/
+			function front_back(a, b){
+				aLength = a.length;
+				bLength = b.length;
+				
+				if(aLength % 2 === 0)
+				{
+					aIndex = Math.floor(aLength/2) 
+				}
+				else
+				{
+					aIndex = Math.floor(aLength/2) + 1
+				}
+				
+				if(bLength % 2 === 0)
+				{
+					bIndex = Math.floor(bLength/2) 
+				}
+				else
+				{
+					bIndex = Math.floor(bLength/2) + 1
+				}
+				
+				aFront = a.slice(0,aIndex);
+				aBack = a.slice(aIndex);
+				
+				bFront = b.slice(0,bIndex);
+				bBack = b.slice(bIndex);
+
+			return aFront + bFront + aBack + bBack;
+			}
+
+		</script>
+
+		
+		<!--  
+		 __   __       . ___     ___  __    ___     __        __  ___          ___  __   ___ 
+		|  \ /  \ |\ | '  |     |__  |  \ |  |     |__)  /\  /__`  |     |__| |__  |__) |__  
+		|__/ \__/ | \|    |     |___ |__/ |  |     |    /~~\ .__/  |     |  | |___ |  \ |___ 
+		                                                                                     
+		-->
+		<script src="./test_suite.js"></script>
+	</body>
+</html>

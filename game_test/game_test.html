@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Final Project Unit Tests</title>
+		<link rel="stylesheet" href="http://code.jquery.com/qunit/qunit-1.15.0.css">
+	</head>
+	<body>
+		<div id="qunit"></div>
+		<div id="qunit-fixture"></div>
+		<script src="http://code.jquery.com/qunit/qunit-1.15.0.js"></script>
+
+		<!-- Include of the player and game objects -->
+		<script src="player.js"></script>
+		<script src="game.js"></script>
+
+		<!-- Qunit tests -->
+		<script type="text/javascript">
+
+			var TestPlayer = new Player('TestPlayer');
+			var TestGame = new Game('RPSLS');
+
+			QUnit.test( "Player Object exists", function( assert ) {
+				assert.equal( typeof(TestPlayer), 'object', "Passed!" );
+			});
+
+			QUnit.test( "Player properties exists", function( assert ) {
+				assert.ok( 'name' in TestPlayer, "name propery exists" );
+				assert.ok( 'hand' in TestPlayer, 'hand propery exists' );
+				assert.ok( 'wins' in TestPlayer, 'wins propery exists' );
+				assert.ok( 'losses' in TestPlayer, 'losses propery exists' );
+				assert.ok( 'played' in TestPlayer, 'played propery exists' );
+				assert.ok( 'rate' in TestPlayer, 'rate propery exists' );
+			});
+
+			QUnit.test( "Player methods work", function( assert ) {
+				TestPlayer.win()
+				TestPlayer.lose()
+				assert.equal( TestPlayer.wins, 1, "win function works" );
+				assert.equal( TestPlayer.losses, 1, "losses function works" );
+				assert.equal( TestPlayer.rate, 0.50, "rate correctly updated" );
+			});
+
+			QUnit.test( "Game Object exists", function( assert ) {
+				assert.equal( typeof(TestGame), 'object', "Passed!" );
+			});
+
+			QUnit.test( "Game properties exist", function( assert ) {
+				assert.ok( 'running' in TestGame, "running propery exists" );
+				assert.ok( 'name' in TestGame, "name propery exists" );
+				assert.ok( 'players' in TestGame, "players propery exists" );
+				assert.ok( Array.isArray(TestGame.players), "players is an array" );
+				assert.ok( 'matrix' in TestGame, "rule matrix exists" );
+				assert.ok( 'choices' in TestGame, "choices array exists" );
+			});
+
+			QUnit.test( "Game choices are correct", function( assert ) {
+				assert.ok( TestGame.choices.indexOf('scissors') > -1, "Rock looks good" );
+				assert.ok( TestGame.choices.indexOf('rock') > -1, "Paper looks good" );
+				assert.ok( TestGame.choices.indexOf('paper') > -1, "scissors looks good" );
+				assert.ok( TestGame.choices.indexOf('spock') > -1, "Lizard looks good" );
+				assert.ok( TestGame.choices.indexOf('rock') > -1, "Spock looks good" );
+			});
+
+			QUnit.test( "Game matrix is correct", function( assert ) {
+				assert.ok( TestGame.matrix.rock.indexOf('scissors') > -1, "Rock looks good" );
+				assert.ok( TestGame.matrix.paper.indexOf('rock') > -1, "Paper looks good" );
+				assert.ok( TestGame.matrix.scissors.indexOf('paper') > -1, "scissors looks good" );
+				assert.ok( TestGame.matrix.lizard.indexOf('spock') > -1, "Lizard looks good" );
+				assert.ok( TestGame.matrix.spock.indexOf('rock') > -1, "Spock looks good" );
+			});
+
+			QUnit.test( "Game methods exist", function( assert ) {
+				assert.ok( 'addPlayer' in TestGame, "addPlayer method exists" );
+				assert.ok( 'getPlayer' in TestGame, "getPlayer method exists" );
+				assert.ok( 'setHand' in TestGame, "setHand method exists" );
+				assert.ok( 'getWinner' in TestGame, "getWinner method exists" );
+			});
+
+			QUnit.test( "Game methods work", function( assert ) {
+				TestGame.addPlayer('Bob')
+				TestGame.addPlayer('Rob')
+				assert.equal( TestGame.players[0].name, 'Bob', "addPlayer method works" );
+				assert.equal( TestGame.players[1].name, 'Rob', "addPlayer method still works" );
+				assert.equal( TestGame.players[0], TestGame.getPlayer(1), "getPlayer method works" );
+				assert.equal( TestGame.players[1], TestGame.getPlayer(2), "getPlayer method still works" );
+				TestGame.setHand(1, 'rock')
+				TestGame.setHand(2, 'paper')
+				assert.equal( TestGame.players[0].hand, 'rock', "setHand method works" );
+				assert.equal( TestGame.players[1].hand, 'paper', "setHand method still works" );
+				assert.equal( TestGame.getWinner(), 2, "getWinner method works" );
+			});
+
+		</script>
+	</body>
+</html>
